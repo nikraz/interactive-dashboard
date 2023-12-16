@@ -7,17 +7,15 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Password;
 use Tests\TestCase;
+use GuzzleHttp\Client;
 
 class ResetPasswordTest extends TestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
-
-        // Skip all the tests in this class TODO enable once logout is ready
-        $this->markTestSkipped('Skipping all tests in this class.');
     }
-    
+
     /** @test */
     public function a_user_can_request_password_reset_link()
     {
@@ -28,7 +26,7 @@ class ResetPasswordTest extends TestCase
         ]);
 
         $response->assertStatus(200);
-        $response->assertJson(['message' => 'We have emailed your password reset link!']);
+        $response->assertJson(['message' => 'We have emailed your password reset link.']);
     }
 
     /** @test */
@@ -45,7 +43,7 @@ class ResetPasswordTest extends TestCase
         ]);
 
         $response->assertStatus(200);
-        $response->assertJson(['message' => 'Your password has been reset!']);
+        $response->assertJson(['message' => 'Your password has been reset.']);
     }
 
     /** @test */
@@ -81,8 +79,8 @@ class ResetPasswordTest extends TestCase
             'password_confirmation' => 'newpassword',
         ]);
 
-        $response->assertStatus(422);
-        $response->assertJsonValidationErrors(['email']);
+        $response->assertStatus(400);
+        $response->assertJson(['email' => 'This password reset token is invalid.']);
     }
 
     /** @test */
@@ -117,5 +115,24 @@ class ResetPasswordTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJsonValidationErrors(['password']);
+    }
+
+    public function an_email_is_sent_when_requesting_password_reset()
+    {
+        $user = User::factory()->create();
+
+        $this->postJson('/api/password/email', [
+            'email' => $user->email,
+        ]);
+
+        // Create a new Guzzle HTTP client
+        $client = new Client();
+
+        // Use MailHog API to check if the email was sent
+        $response = $client->request('GET', 'http://localhost:8025/api/v2/messages');
+        $messages = json_decode($response->getBody(), true);
+
+        $this->assertCount(1, $messages['items']);
+        $this->assertStringContainsString($user->email, $messages['items'][0]['Raw']['From']);
     }
 }

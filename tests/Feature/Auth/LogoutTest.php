@@ -10,6 +10,7 @@ use Tests\TestCase;
 
 //Most tests cases are invalid due to: https://laracasts.com/discuss/channels/testing/tdd-with-sanctum-issue-with-user-logout-case?page=1&replyId=797893
 //Postman collection is provided!
+//https://github.com/laravel/framework/pull/35692 changed and reverted back
 class LogoutTest extends TestCase
 {
     protected function setUp(): void
