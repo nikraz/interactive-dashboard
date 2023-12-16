@@ -29,5 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', 'App\Http\Controllers\Auth\AuthController@logout');
 });
 
-Route::post('/password/email', 'App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail');
-Route::post('/password/reset', 'App\Http\Controllers\Auth\ResetPasswordController@reset');
+Route::post('/password/email', 'App\Http\Controllers\Auth\PasswordController@sendResetLinkEmail');
+Route::post('/password/reset', 'App\Http\Controllers\Auth\PasswordController@reset')->name('password.reset');
+Route::post('/password/forgot', 'App\Http\Controllers\Auth\PasswordController@forgot');
+Route::post('/password/forgot-email', 'App\Http\Controllers\Auth\PasswordController@sendForgotLinkEmail');

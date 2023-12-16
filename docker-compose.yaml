@@ -25,6 +25,10 @@ services:
       - "3307:3306"
     volumes:
       - dbdata:/var/lib/mysql
-
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025" # MailHog web interface
+      - "1025:1025" # MailHog SMTP server
 volumes:
   dbdata:
