@@ -9,20 +9,22 @@ use Tests\TestCase;
 
 class LogoutTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function a_user_can_logout_successfully()
     {
-        $user = User::factory()->create();
-        $token = $user->createToken('API Token')->plainTextToken;
+        $loginResponse = $this->postJson('/api/login', [
+            'email' => 'test@example.com',
+            'password' => 'password',
+        ]);
 
-        $response = $this->withHeaders([
+        $token = $loginResponse->json('token'); // Retrieve the token from the login response
+
+        $logoutResponse = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,
         ])->postJson('/api/logout');
 
-        $response->assertStatus(200);
-        $response->assertJson(['message' => 'Logout successful']);
+        $logoutResponse->assertStatus(200);
+        $logoutResponse->assertJson(['message' => 'Logout successful']);
     }
 
     /** @test */
@@ -56,7 +58,6 @@ class LogoutTest extends TestCase
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,
         ])->getJson('/api/protected-route');
-        // TODO replace with an actual protected route
 
         $response->assertStatus(401);
     }
