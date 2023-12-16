@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-install mysqli \
     && docker-php-ext-install zip \
-    && a2enmod rewrite \
+    && a2enmod rewrite
 
 # Install Composer globally
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -31,7 +31,7 @@ COPY . /var/www/html
 WORKDIR /var/www/html
 
 # Install PHP dependencies with Composer
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --optimize-autoloader
 
 # Install Node.js for front-end asset management
 RUN apt-get update && apt-get install -y nodejs npm
