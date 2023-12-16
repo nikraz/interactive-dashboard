@@ -1,0 +1,7 @@
+/node_modules
+/vendor
+.git
+.env.example
+docker/php/
+README.md
+docker-compose.yaml
