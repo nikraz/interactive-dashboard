@@ -31,4 +31,11 @@ class AuthController extends Controller
 
         return response()->json(['error' => 'The provided credentials do not match our records.'], 401);
     }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json(['message' => 'Logout successful'], 200);
+    }
 }
