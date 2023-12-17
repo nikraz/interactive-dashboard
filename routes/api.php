@@ -30,6 +30,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/email/validate/send', 'App\Http\Controllers\Auth\EmailValidationController@sendValidationEmail');
     Route::post('/email/validate', 'App\Http\Controllers\Auth\EmailValidationController@validateEmail')->name('validation.verify');
+
+    Route::get('/market/last-update', 'App\Http\Controllers\MarketController@lastUpdate');
 });
 
 Route::post('/password/email', 'App\Http\Controllers\Auth\PasswordController@sendResetLinkEmail');
