@@ -1,8 +1,8 @@
 FROM node:latest as build-stage
 WORKDIR /app
-COPY frontend/package*.json ./
+COPY ./package*.json ./
 RUN npm install
-COPY frontend/. .
+COPY . .
 RUN npm run build
 
 # Step 2: Serve the app using a lightweight HTTP server, like nginx
