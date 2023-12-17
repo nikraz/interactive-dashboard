@@ -27,6 +27,9 @@ Route::middleware('auth:sanctum')->group(function () {
         return response()->json(['message' => 'This is a protected route']);
     });
     Route::post('/logout', 'App\Http\Controllers\Auth\AuthController@logout');
+
+    Route::post('/email/validate/send', 'App\Http\Controllers\Auth\EmailValidationController@sendValidationEmail');
+    Route::post('/email/validate', 'App\Http\Controllers\Auth\EmailValidationController@validateEmail')->name('validation.verify');
 });
 
 Route::post('/password/email', 'App\Http\Controllers\Auth\PasswordController@sendResetLinkEmail');
