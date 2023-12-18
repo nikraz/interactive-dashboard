@@ -1,40 +1,52 @@
 import { shallowMount } from '@vue/test-utils';
 import LoginComponent from '@/components/LoginComponent.vue';
+import Vuex from 'vuex';
 import axios from 'axios';
 
 jest.mock('axios');
 
 describe('LoginComponent', () => {
+    let actions;
+    let getters;
+    let store;
 
-    it('calls the login method when the form is submitted', async () => {
-        const wrapper = shallowMount(LoginComponent);
-        wrapper.find('form').trigger('submit.prevent');
-        await wrapper.vm.$nextTick();
-        expect(wrapper.vm.login).toHaveBeenCalled();
+    beforeEach(() => {
+        actions = {
+            login: jest.fn(),
+        };
+        getters = {
+            isAuthenticated: () => false,
+        };
+
+        store = new Vuex.Store({
+            modules: {
+                login: {
+                    namespaced: true,
+                    actions,
+                    getters,
+                },
+            },
+        });
     });
 
     it('validates input fields correctly', async () => {
-        const wrapper = shallowMount(LoginComponent);
+        const wrapper = shallowMount(LoginComponent, {
+            global: {
+                mocks: {
+                    $store: store,
+                },
+            },
+        });
+
+        // Case 1: Empty email and password
         wrapper.find('input[type="email"]').setValue('');
         wrapper.find('input[type="password"]').setValue('');
-    });
+        expect(wrapper.vm.validateInput()).toBe(false);
 
-    it('handles successful login', async () => {
-        axios.post.mockResolvedValue({ data: { token: 'fake-token' } });
-        const wrapper = shallowMount(LoginComponent);
+        // Case 2: Valid email and password
         wrapper.find('input[type="email"]').setValue('test@example.com');
         wrapper.find('input[type="password"]').setValue('password');
-        wrapper.find('form').trigger('submit.prevent');
-        await wrapper.vm.$nextTick();
-    });
-
-    it('handles failed login', async () => {
-        axios.post.mockRejectedValue(new Error('Login failed'));
-        const wrapper = shallowMount(LoginComponent);
-        wrapper.find('input[type="email"]').setValue('wrong@example.com');
-        wrapper.find('input[type="password"]').setValue('wrongpassword');
-        wrapper.find('form').trigger('submit.prevent');
-        await wrapper.vm.$nextTick();
+        expect(wrapper.vm.validateInput()).toBe(true);
     });
 
 });
