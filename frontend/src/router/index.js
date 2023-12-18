@@ -1,11 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginComponent from '@/components/LoginComponent.vue';
 import DashboardComponent from '@/components/DashboardComponent.vue';
+import ForgotPasswordComponent from '@/components/ForgotPasswordComponent.vue';
 import store from '@/store';
 
 const routes = [
     { path: '/login', component: LoginComponent },
-    { path: '/dashboard', component: DashboardComponent, meta: { requiresAuth: true }}
+    { path: '/dashboard', component: DashboardComponent, meta: { requiresAuth: true }},
+    { path: '/forgot-password', component: ForgotPasswordComponent}
 ];
 
 const router = createRouter({
