@@ -1,8 +1,16 @@
 <template>
+    <div style="width: 20em;float: right; margin-bottom: 10em;">
+        <router-link to="/logout" class="logout-link">Logout</router-link>
+    </div>
     <div class="dashboard">
-        <h2>Market Watch: {{ this.dashboardDataLastUpdate }}</h2>
+
         <table class="market-table">
             <thead>
+            <tr>
+                <th colspan="3" style="text-align: center;">
+                    <h2>Market Watch: {{ this.dashboardDataLastUpdate }}</h2>
+                </th>
+            </tr>
             <tr>
                 <th>Symbol</th>
                 <th>Bid</th>
@@ -42,6 +50,7 @@ export default {
     },
     methods: {
         ...mapActions('dashboard', ['getDashboardData']),
+        ...mapActions('logout', ['logout']),
         async fetchData() {
             this.previousData = this.dashboardData;
             await this.getDashboardData();
@@ -123,5 +132,21 @@ export default {
     width: 16px; /* Set the size of your arrow images */
     height: 16px;
     vertical-align: middle; /* Align the arrow with the text */
+}
+
+.logout-link {
+    display: block;
+    text-align: center;
+    margin-top: 15px; /* Spacing above the link */
+    padding: 10px;
+    border-radius: 4px;
+    color: #007bff;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.logout-link:hover {
+    text-decoration: underline;
+    background-color: #e7f5ff; /* Light blue background on hover */
 }
 </style>

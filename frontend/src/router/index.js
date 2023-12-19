@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginComponent from '@/components/LoginComponent.vue';
+import LogoutComponent from '@/components/LogoutComponent.vue';
 import DashboardComponent from '@/components/DashboardComponent.vue';
 import ForgotPasswordComponent from '@/components/ForgotPasswordComponent.vue';
 import store from '@/store';
@@ -7,6 +8,7 @@ import store from '@/store';
 const routes = [
     { path: '/login', component: LoginComponent },
     { path: '/dashboard', component: DashboardComponent, meta: { requiresAuth: true }},
+    { path: '/logout', component: LogoutComponent, meta: { requiresAuth: true }},
     { path: '/forgot-password', component: ForgotPasswordComponent}
 ];
 
