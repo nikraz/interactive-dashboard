@@ -21,9 +21,13 @@ Follow these steps to set up the project:
     cd interactive-dashboard
     cp .env.example .env
     cp frontend/.env.example frontend/.env
-    docker-compose up --build
+    docker-compose up
     docker ps -a | grep "interactive-dashboard_app"
     docker exec -it <container id>  bash
+    composer install 
+    chown -R www-data:www-data /var/www/html \
+    && chmod -R 777 /var/www/html/storage \
+    && chmod -R 777 /var/www/html/bootstrap/cache
     php artisan key:generate
     php artisan migrate
     php artisan db:seed
