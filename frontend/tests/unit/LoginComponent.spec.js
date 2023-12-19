@@ -35,6 +35,9 @@ describe('LoginComponent', () => {
                 mocks: {
                     $store: store,
                 },
+                stubs: {
+                    'router-link': true
+                }
             },
         });
 

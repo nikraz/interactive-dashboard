@@ -19,8 +19,9 @@ console.log('WebSocket server listening on port 6001');
 function generateRandomCurrencyData() {
     const currencies = ["EURUSD", "AUDUSD", "EURGBP", "GBPUSD"];
     const prices = currencies.map(symbol => {
+        // Using toFixed(5) ensures five digits after the decimal
         const bid = parseFloat((Math.random() * (1.2 - 1.0) + 1.0).toFixed(5));
-        const ask = bid + 0.0003;
+        const ask = parseFloat((bid + 0.0003).toFixed(5));
         return { symbol, bid: bid.toString(), ask: ask.toString() };
     });
 

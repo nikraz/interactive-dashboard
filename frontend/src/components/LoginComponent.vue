@@ -61,7 +61,8 @@ export default {
                     await this.login({ email: this.email, password: this.password });
 
                     if (this.isAuthenticated) {
-                        this.$router.push('/dashboard');
+                        this.$router.push('/market-watch');
+                        // this.$router.push('/dashboard');
                     } else {
                         this.errorMessage = 'Provided credentials do not match our records';
                     }
