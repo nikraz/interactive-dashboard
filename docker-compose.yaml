@@ -40,5 +40,15 @@ services:
       - ./frontend:/usr/src/app
     depends_on:
       - app
+  websocket:
+    build:
+      context: ./websocket
+      dockerfile: docker/Dockerfile
+    ports:
+      - "6001:6001"
+    volumes:
+      - ./websocket:/usr/src/app
+    depends_on:
+      - app
 volumes:
   dbdata:
