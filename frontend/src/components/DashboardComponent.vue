@@ -2,6 +2,9 @@
     <div style="width: 20em;float: right; margin-bottom: 10em;">
         <router-link to="/logout" class="logout-link">Logout</router-link>
     </div>
+    <div style="width: 20em;float: left; margin-bottom: 10em;">
+        <router-link to="/email-verification" class="logout-link">Send Email Verification Link</router-link>
+    </div>
     <div class="dashboard">
 
         <table class="market-table">

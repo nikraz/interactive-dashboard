@@ -17,16 +17,6 @@ class EmailValidationController extends Controller
 {
     public function sendValidationEmail(Request $request)
     {
-        $validatedData = $request->validate([
-            'email' => 'required|email',
-        ]);
-
-        $user = $request->user();
-
-        if ($user->email !== $validatedData['email']) {
-            return response()->json(['message' => 'Invalid email address.'], 422);
-        }
-
         $user = $request->user();
 
         // Create a new token for email validation
