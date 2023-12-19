@@ -9,7 +9,7 @@
         <table>
             <thead>
                 <tr>
-                   <th  style="text-align: center; background: #0f6674" colspan="3">
+                   <th  style="text-align: center; background: rgb(157 214 223)" colspan="3">
                        Market Watch: {{ lastUpdate }}
                    </th>
                 </tr>
@@ -75,14 +75,14 @@ export default {
                 this.prices = newData.prices;
             };
 
-            // this.ws.onclose = () => {
-            //     console.log("Disconnected from WebSocket");
-            //     // Optional: Reconnect logic
-            // };
-            //
-            // this.ws.onerror = (error) => {
-            //     console.error("WebSocket Error:", error);
-            // };
+            this.ws.onclose = () => {
+                console.log("Disconnected from WebSocket");
+                // Optional: Reconnect logic
+            };
+
+            this.ws.onerror = (error) => {
+                console.error("WebSocket Error:", error);
+            };
         },
     },
 };
@@ -102,7 +102,7 @@ td {border: 1px solid black;}
 .logout-link {
     display: block;
     text-align: center;
-    margin-top: 15px; /* Spacing above the link */
+    margin-top: 15px;
     padding: 10px;
     border-radius: 4px;
     color: #007bff;
@@ -112,7 +112,7 @@ td {border: 1px solid black;}
 
 .logout-link:hover {
     text-decoration: underline;
-    background-color: #e7f5ff; /* Light blue background on hover */
+    background-color: #e7f5ff;
 }
 
 
